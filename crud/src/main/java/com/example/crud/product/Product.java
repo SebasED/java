@@ -1,30 +1,38 @@
 package com.example.crud.product;
 
-import java.time.LocalDate;
+import jakarta.persistence.*;
+import org.springframework.context.annotation.Primary;
 
+import java.time.LocalDate;
+import java.time.Period;
+
+@Entity
+@Table
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String name;
     private float price;
-    private LocalDate fecha;
+    private LocalDate date;
+    @Transient
     private int antiguedad;
 
     public Product() {
     }
 
-    public Product(Long id, String name, float price, LocalDate fecha, int antiguedad) {
+    public Product(Long id, String name, float price, LocalDate fecha) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.fecha = fecha;
-        this.antiguedad = antiguedad;
+        this.date = fecha;
     }
 
-    public Product(String name, float price, LocalDate fecha, int antiguedad) {
+    public Product(String name, float price, LocalDate fecha) {
         this.name = name;
         this.price = price;
-        this.fecha = fecha;
-        this.antiguedad = antiguedad;
+        this.date = fecha;
     }
 
     public Long getId() {
@@ -51,16 +59,17 @@ public class Product {
         this.price = price;
     }
 
-    public LocalDate getFecha() {
-        return fecha;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public int getAntiguedad() {
-        return antiguedad;
+
+        return Period.between(this.date,LocalDate.now()).getYears();
     }
 
     public void setAntiguedad(int antiguedad) {
