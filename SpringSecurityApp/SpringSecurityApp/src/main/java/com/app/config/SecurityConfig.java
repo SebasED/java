@@ -29,20 +29,29 @@ import java.util.List;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+//        return httpSecurity
+//                .csrf(csrf -> csrf.disable())
+//                .httpBasic(Customizer.withDefaults())
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authorizeHttpRequests(http -> {
+//                    // Configure the public endpoints
+//                    http.requestMatchers(HttpMethod.GET, "/auth/hello").permitAll();
+//                    // Configure the private endpoints
+//                    http.requestMatchers(HttpMethod.GET, "/auth/hello-secured").hasAuthority("CREATE");
+//                    // Configure the rest of the endpoints
+//                    http.anyRequest().denyAll();
+//                })
+//                .build();
+//    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(http -> {
-                    // Configure the public endpoints
-                    http.requestMatchers(HttpMethod.GET, "/auth/hello").permitAll();
-                    // Configure the private endpoints
-                    http.requestMatchers(HttpMethod.GET, "/auth/hello-secured").hasAuthority("CREATE");
-                    // Configure the rest of the endpoints
-                    http.anyRequest().denyAll();
-                })
                 .build();
     }
 
